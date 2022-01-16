@@ -40,7 +40,7 @@
           />
         </div>
         <!-- SUBMIT BUTTON -->
-        <button id="submit">
+        <button id="submit" @click="submit">
           <div style="margin: 0px auto">Submit</div>
         </button>
       </div>
@@ -64,7 +64,7 @@ export default {
       questionText: "",
       ans: [],
       correct: [],
-      submited: [],
+      submitted: [],
       questionIDinput: "",
     };
   },
@@ -111,11 +111,37 @@ export default {
       }
       return result;
     },
+    buildQuestion: function () {
+      //build the question object to be submitted
+      const payload = {
+        id: this.questionID,
+        question: this.questionText,
+        answers: this.ans,
+      };
+      return payload;
+    },
+    postToServer: function (payload) {
+      //post question to server
+      const payloadToString = JSON.stringify(payload);
+      console.log(`Posting to server:${payloadToString}`);
+      this.submitted.push(payload);
+      sessionStorage.setItem("sessionQuestions", this.submitted); //save to session storage
+    },
+    resetEditor() {
+      this.rawtext = "";
+      this.questionText = "";
+      this.ans = [];
+      this.correct = [];
+      this.questionIDinput = "";
+    },
     submit: function () {
       //submit button
       //create payload
+      const payload = this.buildQuestion();
       //clear area
       //POST to server
+      this.postToServer(payload);
+      this.resetEditor();
       //pretty print TODO
     },
   },

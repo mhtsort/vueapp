@@ -1,5 +1,9 @@
 <template>
-  <option v-for="answerOption in answers" :key="answerOption.id">
+  <option
+    v-for="answerOption in answers"
+    :key="answerOption.id"
+    :value="answerOption.id"
+  >
     {{ answerOption.value }}
   </option>
 </template>

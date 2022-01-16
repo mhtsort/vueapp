@@ -1,17 +1,47 @@
 <!DOCTYPE html>
 <html lang="">
   <head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width,initial-scale=1.0">
-    <link rel="icon" href="<%= BASE_URL %>favicon.ico">
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width,initial-scale=1.0" />
+    <link rel="icon" href="<%= BASE_URL %>favicon.ico" />
     <title><%= htmlWebpackPlugin.options.title %></title>
   </head>
   <body>
     <noscript>
-      <strong>We're sorry but <%= htmlWebpackPlugin.options.title %> doesn't work properly without JavaScript enabled. Please enable it to continue.</strong>
+      <strong
+        >We're sorry but <%= htmlWebpackPlugin.options.title %> doesn't work
+        properly without JavaScript enabled. Please enable it to
+        continue.</strong
+      >
     </noscript>
     <div id="app"></div>
     <!-- built files will be auto injected -->
   </body>
 </html>
+<style>
+  :root {
+    font-family: Cambria, Cochin, Georgia, Times, "Times New Roman", serif;
+    font-size: 1em;
+    margin: 0px auto;
+    overflow-y: hidden;
+    height: 90vh;
+    max-width: 80%;
+
+    /* Harbor Color Scheme */
+    --darker: #354649;
+    --dark: #6c7a89;
+    --light: #a3c6c4;
+    --white: #e0e7e9;
+  }
+  .debug {
+    background-color: darkred;
+    color: var(--white);
+    font-size: x-large;
+    border: 2px solid var(--dark);
+  }
+  body {
+    background-color: var(--light);
+    color: var(--darker);
+  }
+</style>

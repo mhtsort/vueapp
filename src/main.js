@@ -1,4 +1,7 @@
-import { createApp } from 'vue'
-import App from './App.vue'
+import { createApp } from "vue";
+import App from "./App.vue";
+import Choices from "./components/Choices.vue"; //Define new component question choices
 
-createApp(App).mount('#app')
+const app = createApp(App);
+app.component("app-choices", Choices); //Register component question Choices
+app.mount("#app");

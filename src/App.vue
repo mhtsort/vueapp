@@ -25,7 +25,7 @@
           id="correctSelector"
           v-model="correct"
           multiple
-          onchange="renderMathInElement(document.getElementsByTagName('select')[0])"
+          @change="setCorrectValues"
         >
           <app-choices :answers="ans"></app-choices>
         </select>
@@ -110,6 +110,19 @@ export default {
         );
       }
       return result;
+    },
+    setCorrectValues: function () {
+      //set the values of right or wrong answers
+      this.ans = this.ans.map((x) => {
+        if (this.correct.includes(x.id)) {
+          //if id in correct array
+          x.correct = true;
+        } else {
+          x.correct = false;
+        }
+        return x;
+      });
+      console.log(this.ans);
     },
     buildQuestion: function () {
       //build the question object to be submitted

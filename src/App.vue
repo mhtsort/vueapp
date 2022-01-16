@@ -32,7 +32,12 @@
         <!-- QUESTION ID -->
         <div>
           <label for="questionDisplay">Question ID: </label>
-          <input id="question-ID" type="text" v-model="questionIDinput" />
+          <input
+            id="question-ID"
+            type="text"
+            defaultValue="Goofy"
+            v-model="questionIDinput"
+          />
         </div>
         <!-- SUBMIT BUTTON -->
         <button id="submit">
@@ -40,7 +45,9 @@
         </button>
       </div>
     </div>
-    <div class="debug">{{ question }} the correct is {{ correct }}</div>
+    <div class="debug">
+      {{ ans }} the correct is {{ correct }} id is {{ questionID }}
+    </div>
     <div id="text-area-result"></div>
     <div id="el"><span>$$2+\frac{1}{x}$$</span></div>
     <!-- <script>
@@ -66,12 +73,10 @@ export default {
       get() {
         if (this.questionIDinput) {
           //if input textbox is not empty get this value
-          console.log("The question id is " + this.questionIDinput);
           return this.questionIDinput;
         } else {
           //else put something random --TODO CHECK IF EXISTS
-          let idd = Math.Random();
-          console.log("The question id is idd");
+          let idd = this.makeid(8);
           return idd;
         }
       },
@@ -93,6 +98,18 @@ export default {
       }
       console.log(questionText + answers);
       this.ans = answers; //answers;
+    },
+    makeid(length) {
+      var result = "";
+      var characters =
+        "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+      var charactersLength = characters.length;
+      for (var i = 0; i < length; i++) {
+        result += characters.charAt(
+          Math.floor(Math.random() * charactersLength)
+        );
+      }
+      return result;
     },
     submit: function () {
       //submit button

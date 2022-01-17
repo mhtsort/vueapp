@@ -158,7 +158,7 @@ export default {
       this.makeRequest(payload);
     },
     makeRequest: function (data) {
-      var url = "http://localhost:3000/handle";
+      var url = "http://simple.tsortanidis.gr/server/handle"; //"http://localhost:3000/handle";
       console.log("posting to " + url);
       var xhr = new XMLHttpRequest();
       xhr.open("POST", url);

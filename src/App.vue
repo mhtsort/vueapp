@@ -1,60 +1,70 @@
 <template>
-  <div id="editor">
-    <!-- <link
+  <div class="container">
+    <div id="editor">
+      <!-- <link
       rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.7.1/katex.min.css"
     />
     <script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.7.1/katex.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.7.1/contrib/auto-render.min.js"></script> -->
-    <h1>Editor panel</h1>
-    <div class="env">
-      <div id="text-area-container">
-        <!-- TEXT EDITOR AREA -->
-        <textarea
-          defaultValue="Question###ans###ans"
-          v-model="rawtext"
-          @input="parseInput(rawtext)"
-        >
-        </textarea>
-        <!-- QUESTION DISPLAY AREA -->
+      <h1>Editor panel</h1>
+      <div class="env">
+        <div id="text-area-container">
+          <!-- TEXT EDITOR AREA -->
+          <textarea
+            defaultValue="Question###ans###ans"
+            v-model="rawtext"
+            @input="parseInput(rawtext)"
+          >
+          </textarea>
+          <!-- QUESTION DISPLAY AREA -->
 
-        <div id="questiondDisplay" v-html="questionText" v-katex></div>
+          <div id="questiondDisplay" v-html="questionText" v-katex></div>
 
-        <!-- SELECT CORRECT ANSWER -->
+          <!-- SELECT CORRECT ANSWER -->
 
-        <select
-          id="correctSelector"
-          v-model="correct"
-          multiple
-          @change="setCorrectValues"
-        >
-          <app-choices :answers="ans"></app-choices>
-        </select>
+          <select
+            id="correctSelector"
+            v-model="correct"
+            multiple
+            @change="setCorrectValues"
+          >
+            <app-choices :answers="ans"></app-choices>
+          </select>
 
-        <!-- QUESTION ID -->
-        <div>
-          <label for="questionDisplay">Question ID: </label>
-          <input
-            id="question-ID"
-            type="text"
-            defaultValue="Goofy"
-            v-model="questionIDinput"
-          />
+          <!-- QUESTION ID -->
+          <div>
+            <label for="questionDisplay">Question ID: </label>
+            <input
+              id="question-ID"
+              type="text"
+              defaultValue=""
+              v-model="questionIDinput"
+            />
+          </div>
+          <!-- SUBMIT BUTTON -->
+          <button id="submit" @click="submit">
+            <div style="margin: 0px auto">Submit</div>
+          </button>
         </div>
-        <!-- SUBMIT BUTTON -->
-        <button id="submit" @click="submit">
-          <div style="margin: 0px auto">Submit</div>
-        </button>
       </div>
-    </div>
-    <div class="debug">
-      {{ ans }} the correct is {{ correct }} id is {{ questionID }}
-    </div>
-    <div id="text-area-result"></div>
-    <div id="el"><span v-katex>$$2+\frac{1}{x}$$</span></div>
-    <!-- <script>
+      <div class="debug">
+        {{ ans }} the correct is {{ correct }} id is {{ questionID }}
+      </div>
+      <div id="text-area-result"></div>
+      <div id="el"><span v-katex>$$2+\frac{1}{x}$$</span></div>
+      <!-- <script>
       // renderMathInElement(document.body);
     </script> -->
+    </div>
+    <div class="preview" style="border: 5px solid black">
+      <app-question-display
+        v-for="obj in submitted"
+        :questionObject="obj"
+        :key="obj.id"
+      >
+      </app-question-display>
+    </div>
   </div>
 </template>
 
@@ -102,6 +112,7 @@ export default {
       this.ans = answers; //answers;
     },
     makeid(length) {
+      //ref: https://www.codegrepper.com/code-examples/javascript/generate+random+characters+javascript
       var result = "";
       var characters =
         "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
@@ -140,7 +151,10 @@ export default {
       const payloadToString = JSON.stringify(payload);
       console.log(`Posting to server:${payloadToString}`);
       this.submitted.push(payload);
-      sessionStorage.setItem("sessionQuestions", this.submitted); //save to session storage
+      sessionStorage.setItem(
+        "sessionQuestions",
+        JSON.stringify(this.submitted)
+      ); //save to session storage
     },
     resetEditor() {
       this.rawtext = "";
@@ -151,19 +165,40 @@ export default {
     },
     submit: function () {
       //submit button
-      //create payload
-      const payload = this.buildQuestion();
-      //clear area
-      //POST to server
-      this.postToServer(payload);
-      this.resetEditor();
-      //pretty print TODO
+      if (this.ans.length > 1) {
+        //if question has at least 2 answers
+        //create payload
+        const payload = this.buildQuestion();
+        //clear area
+        //POST to server
+        this.postToServer(payload);
+        this.resetEditor();
+        //pretty print TODO
+      } else {
+        alert("At least 2 answers needed");
+      }
     },
   },
 };
 </script>
 
 <style>
+@import url("https://fonts.googleapis.com/css2?family=STIX+Two+Text:ital,wght@0,400;0,500;0,600;1,400;1,500;1,600&display=swap");
+* {
+  font-family: "STIX Two Text", Cambria, Cochin, Georgia, Times,
+    "Times New Roman", serif;
+}
+.container {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-gap: 5%;
+  justify-items: stretch;
+}
+/* delete me */
+#editor {
+  width: 100%;
+  margin: 0px auto;
+}
 textarea {
   background-color: var(--white);
   border-top-left-radius: 10px;
@@ -176,14 +211,14 @@ textarea {
 
 .env {
   height: 80vh;
-  border: 3px salmon solid;
+  /* border: 3px salmon solid; */
 }
 /* Grid column container */
 #text-area-container {
-  border: 15px solid var(--dark);
-  box-shadow: 20px 20px 10px #6c7a89;
+  border: 10px solid var(--dark);
+  box-shadow: 5px 5px 5px #6c7a89;
   border-radius: 10px;
-  min-width: 60%;
+  /* min-width: 60%; */
   min-height: 80%;
   margin: 0pt auto;
   display: grid;
@@ -200,6 +235,12 @@ textarea {
   padding-top: 20px;
   padding-bottom: 20px;
   align-self: stretch;
+  border-radius: 5px;
+  transition: background-color 0.5s, color 0.5s;
+}
+#submit:hover {
+  background-color: var(--dark);
+  color: var(--darker);
 }
 #correctSelector {
   align-self: stretch;

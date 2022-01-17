@@ -20,12 +20,15 @@
   </body>
 </html>
 <style>
+  @import url("https://fonts.googleapis.com/css2?family=STIX+Two+Text:ital,wght@0,400;0,500;0,600;1,400;1,500;1,600&display=swap");
   :root {
-    font-family: Cambria, Cochin, Georgia, Times, "Times New Roman", serif;
+    font-family: "STIX Two Text", Cambria, Cochin, Georgia, Times,
+      "Times New Roman", serif;
     font-size: 1em;
     margin: 0px auto;
-    overflow-y: hidden;
-    height: 90vh;
+    /*no scrolling
+    overflow-y: hidden;*/
+    /* height: 100%; */
     max-width: 80%;
 
     /* Harbor Color Scheme */
@@ -35,6 +38,7 @@
     --white: #e0e7e9;
   }
   .debug {
+    font-family: "STIX Two Text";
     background-color: darkred;
     color: var(--white);
     font-size: x-large;

@@ -155,14 +155,41 @@ export default {
         "sessionQuestions",
         JSON.stringify(this.submitted)
       ); //save to session storage
+      this.makeRequest(payload);
     },
-    resetEditor() {
+    makeRequest: function (data) {
+      var url = "http://localhost:3000/handle";
+      console.log("posting to " + url);
+      var xhr = new XMLHttpRequest();
+      xhr.open("POST", url);
+
+      xhr.setRequestHeader("Accept", "application/json");
+      xhr.setRequestHeader("Content-Type", "application/json");
+
+      xhr.onreadystatechange = function () {
+        if (xhr.readyState === 4) {
+          console.log(xhr.responseText);
+        }
+      };
+
+      //       var data = `{
+      //   "login": 78912,
+      //   "Customer": "Jason Sweet",
+      //   "Quantity": 1,
+      //   "Price": 18.00
+      // }`;
+
+      xhr.send(JSON.stringify(data));
+    },
+
+    resetEditor: function () {
       this.rawtext = "";
       this.questionText = "";
       this.ans = [];
       this.correct = [];
       this.questionIDinput = "";
     },
+
     submit: function () {
       //submit button
       if (this.ans.length > 1) {

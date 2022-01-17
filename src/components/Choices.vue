@@ -1,10 +1,13 @@
 <template>
   <option
+    v-katex
     v-for="answerOption in answers"
     :key="answerOption.id"
     :value="answerOption.id"
   >
-    {{ answerOption.value }}
+    <div>
+      {{ answerOption.value }}
+    </div>
   </option>
 </template>
 

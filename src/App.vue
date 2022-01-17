@@ -18,9 +18,10 @@
         </textarea>
         <!-- QUESTION DISPLAY AREA -->
 
-        <div id="questiondDisplay" v-html="questionText"></div>
+        <div id="questiondDisplay" v-html="questionText" v-katex></div>
 
         <!-- SELECT CORRECT ANSWER -->
+
         <select
           id="correctSelector"
           v-model="correct"
@@ -29,6 +30,7 @@
         >
           <app-choices :answers="ans"></app-choices>
         </select>
+
         <!-- QUESTION ID -->
         <div>
           <label for="questionDisplay">Question ID: </label>
@@ -49,7 +51,7 @@
       {{ ans }} the correct is {{ correct }} id is {{ questionID }}
     </div>
     <div id="text-area-result"></div>
-    <div id="el"><span>$$2+\frac{1}{x}$$</span></div>
+    <div id="el"><span v-katex>$$2+\frac{1}{x}$$</span></div>
     <!-- <script>
       // renderMathInElement(document.body);
     </script> -->
